@@ -186,7 +186,7 @@ int getBinaryNumber(int decimal, int *binary, int *complement, int getComp){
 
 void multProcess(){
     int q_1 = 0, z, initial = 0;
-    int a, b, decimalResult, controller = FALSE;
+    int a, b, controller = FALSE;
     int A[BINNARYLENGTH];
     int Q[BINNARYLENGTH], M[BINNARYLENGTH];
     int Qcomp[BINNARYLENGTH], Mcomp[BINNARYLENGTH];
@@ -204,8 +204,6 @@ void multProcess(){
     }
 
     if(controller){
-        decimalResult = a * b;
-        printf("\nResultado esperado da multiplicacao: %d\n", decimalResult);
         printf("\nMultiplicador: ");
         showBinary(Q);
         printf("\nMultiplicando: ");
@@ -226,7 +224,7 @@ void multProcess(){
             printf("\n-------------------------------------------------");
             printf("\n[Ciclo %d]", i+1);
             if(Q[BINNARYLENGTH-1] == 1 && q_1 == 0){
-                printf("A <- A - M");
+                printf("\nA <- A - M");
                 sumBinnary(A, Mcomp, resSum);
                 initial = 1;
                 for(z = 0; z < BINNARYLENGTH; z++){
@@ -240,7 +238,7 @@ void multProcess(){
                 printf("\nM: ");
                 showBinary(M);
             }else if(Q[BINNARYLENGTH-1] == 0 && q_1 == 1){
-                printf("A <- A + M");
+                printf("\nA <- A + M");
                 sumBinnary(A, M, resSum);
                 initial = 0;
                 for(z = 0; z < BINNARYLENGTH; z++){
@@ -265,7 +263,7 @@ void multProcess(){
             showBinary(M);
         }
         printf("\n-------------------------------------------------");
-        printf("Resultado da multiplicacao: ");
+        printf("\n\nResultado da multiplicacao: ");
         showBinary(A);
         showBinary(Q);
     }else{
@@ -274,7 +272,7 @@ void multProcess(){
 }
 
 void divProcess(){
-    int a, b, decimalResult, controller = FALSE;
+    int a, b, controller = FALSE;
     int isZero = FALSE;
     int A[BINNARYLENGTH];
     int Q[BINNARYLENGTH], M[BINNARYLENGTH];
@@ -293,8 +291,6 @@ void divProcess(){
     }
 
     if(controller){
-        decimalResult = a / b;
-        printf("\nResultado esperado da divisao: %d\n", decimalResult);
         printf("\nDividendo: ");
         showBinary(Q);
         printf("\nDivisor: ");
@@ -316,7 +312,7 @@ void divProcess(){
             printf("\n-------------------------------------------------");
             printf("\n[Ciclo %d]", i+1);
 
-            printf("\nDeslocamento a esquerda");
+            printf("\n\nDeslocamento a esquerda");
             shiftDiv(A, Q);
             printf("\nA: ");
             showBinary(A);
@@ -327,7 +323,7 @@ void divProcess(){
             printf("\nM': ");
             showBinary(Mcomp);
 
-            printf("\nA <- A - M");
+            printf("\n\nA <- A - M");
             sumBinnary(A, Mcomp, resSum);
             for(int i = 0; i < BINNARYLENGTH; i++){
                 A[i] = resSum[i];
@@ -342,7 +338,7 @@ void divProcess(){
             showBinary(Mcomp);
 
             if(A[0] == 1){
-                printf("\nA < 0: Q0 = 0, A <- A + M");
+                printf("\n\nA < 0: Q0 = 0, A <- A + M");
                 Q[BINNARYLENGTH - 1] = 0;
                 sumBinnary(A, M, resSum);
                 for(int i = 0; i < BINNARYLENGTH; i++){
@@ -357,7 +353,7 @@ void divProcess(){
                 printf("\nM': ");
                 showBinary(Mcomp);
             }else{
-                printf("\nA >= 0: Q0 = 1");
+                printf("\n\nA >= 0: Q0 = 1");
                 Q[BINNARYLENGTH - 1] = 1;
                 printf("\nA: ");
                 showBinary(A);
@@ -370,7 +366,7 @@ void divProcess(){
             }
         }
         printf("\n-------------------------------------------------");
-        printf("\nResultado da divisao: ");
+        printf("\n\nResultado da divisao: ");
         printf("\nResto:");
         showBinary(A);
         printf("\nResultado:");
