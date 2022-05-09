@@ -8,18 +8,19 @@
 #define TRUE 1
 #define FALSE 0
 
+//Funcao para mapeamento de avisos do software
 char msg[4][255] = {
     "Um numero decimal excede a quantidade de bits suportada quando transformado em binario\n", 
     "Estouro de Bits para o calculo\n",
     "Opcao Invalida\n",
     "Finalizando Calculadora\n"
 };
-
 void msgShow(int code){
     code = code - 1;
     printf("\n[---WARNING---]: %s\n", msg[code]);
 }
 
+//Funcao para imprimir um numero binario ao usuario
 void showBinary(int *bin){
     int i;
     for(i = 0; i < BINNARYLENGTH; i++){
@@ -27,6 +28,7 @@ void showBinary(int *bin){
     }
 }
 
+//Funcao para a coleta de numeros decimais
 int getDecimalNumber(int op){
     int decimalNumber;
     char opcoes[4][20] = {"Multiplicador", "Multiplicando", "Dividendo", "Divisor"};
@@ -35,6 +37,7 @@ int getDecimalNumber(int op){
     return decimalNumber;
 }
 
+//Funcao para o deslocamento à direita realizado na multiplicacao
 int shiftMult(int *A, int *Q, int inicialA){
     int resto, i;
     resto = Q[BINNARYLENGTH - 1];
@@ -57,6 +60,7 @@ int shiftMult(int *A, int *Q, int inicialA){
     return resto;
 }
 
+//Funcao para o deslocamento à esquerda realizado na divisao
 void shiftDiv(int *A, int *Q){
     int i;
     for(i = 0; i < BINNARYLENGTH; i++){
@@ -76,6 +80,7 @@ void shiftDiv(int *A, int *Q){
     }
 }
 
+//Funcao para realizar a soma de dois numeros binarios e retornar o carry (se houver)
 int sumBinnary(int *bin1, int *bin2, int *result){
     int i, carry = 0;
     for(i = BINNARYLENGTH-1; i >= 0; i--){
@@ -106,6 +111,7 @@ int sumBinnary(int *bin1, int *bin2, int *result){
     return carry;
 }
 
+//Funcao para criar o complemento de dois de um numero binario
 void getBinaryComplement(int *binary, int *complement){
     int realComplement[BINNARYLENGTH];
     int binOne[BINNARYLENGTH];
@@ -129,6 +135,7 @@ void getBinaryComplement(int *binary, int *complement){
     }
 }
 
+//Funcao que transforma um numero decimal em binario
 int getBinaryNumber(int decimal, int *binary, int *complement, int getComp){
     int i = 0, j = 0;
     int needComplement = FALSE;
@@ -184,25 +191,38 @@ int getBinaryNumber(int decimal, int *binary, int *complement, int getComp){
     }
 }
 
+//Funcao CORE que realiza todas as operacoes necessarias para a multiplicacao em complemento de dois
 void multProcess(){
     int q_1 = 0, z, initial = 0;
     int a, b, controller = FALSE;
+    //Inicializaçao do numero A
     int A[BINNARYLENGTH];
+
+    //Inicializaçao do Multiplicador e do Multiplicando
     int Q[BINNARYLENGTH], M[BINNARYLENGTH];
+
+    //Inicializacao dos vetores para o complemento de dois
     int Qcomp[BINNARYLENGTH], Mcomp[BINNARYLENGTH];
+
+    //Vetor auxiliar para a resposta proveniente da soma
     int resSum[BINNARYLENGTH];
+
+    //Coleta dos numeros decimais
     a = getDecimalNumber(0);
     b = getDecimalNumber(1);
+
     if (getBinaryNumber(a, Q, Qcomp, TRUE)){
         if (getBinaryNumber(b, M, Mcomp, TRUE)){
             controller = TRUE;
         }
     }
 
+    //Reset do vetor binario para A
     for(int i = 0; i < BINNARYLENGTH; i++){
         A[i] = 0;
     }
 
+    //Execucao do algoritmo de Booth para a multiplicacao
     if(controller){
         printf("\nMultiplicador: ");
         showBinary(Q);
@@ -271,25 +291,38 @@ void multProcess(){
     }
 }
 
+//Funcao CORE para a divisao em complemento de dois, juntamente com suas operacoes internas
 void divProcess(){
     int a, b, controller = FALSE;
     int isZero = FALSE;
+    //Inicializaçao do numero A
     int A[BINNARYLENGTH];
+
+    //Inicializaçao do Divisor e do Dividendo
     int Q[BINNARYLENGTH], M[BINNARYLENGTH];
+
+    //Inicializacao dos vetores para o complemento de dois
     int Qcomp[BINNARYLENGTH], Mcomp[BINNARYLENGTH];
+
+    //Vetor auxiliar para a resposta proveniente da soma
     int resSum[BINNARYLENGTH];
+
+    //Coleta dos numeros decimais
     a = getDecimalNumber(2);
     b = getDecimalNumber(3);
+
     if (getBinaryNumber(a, Q, Qcomp, TRUE)){
         if (getBinaryNumber(b, M, Mcomp, TRUE)){
             controller = TRUE;
         }
     }
 
+    //Reset do vetor binario para A
     for(int i = 0; i < BINNARYLENGTH; i++){
         A[i] = 0;
     }
 
+    //Execucao do algoritmo da divisao segundo fluxograma utilizado
     if(controller){
         printf("\nDividendo: ");
         showBinary(Q);
@@ -376,6 +409,7 @@ void divProcess(){
     }
 }
 
+//Funcao para mostrar o menu ao usuario
 int showOptions(){
     int op = -1;
     do{ 
@@ -393,6 +427,7 @@ int showOptions(){
     return op;
 }
 
+//Funcao main para o looping do programa
 int main(){
     int resp = 0;
     do{

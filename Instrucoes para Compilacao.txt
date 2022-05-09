@@ -1,0 +1,15 @@
+Instruções para Compilação:
+
+1) Abra o código twoComp.c
+2) Caso não tenha instalado, busque um compilador C para seu computador
+   -> Linux (GCC), Windows (MinGW)
+3) Caso já tenha o compilador instalado, compile o código .c
+4) Execute o arquivo .exe gerado
+5) Siga as instruções fornecidas no console, para realizar as operações dentro do software.
+
+
+Mudanças na estrutura:
+1) Alterar tamanho do numero binario:
+   -> O numero binário para essa calculadora é limitado em 15bits para seu valor
+	e 1 bit para o sinal, sendo possível sua alteração por meio da mudança dos valores
+	definidos no cabeçalho do código. Lembrando sempre de deixar 1 bit a mais para o sinal.
